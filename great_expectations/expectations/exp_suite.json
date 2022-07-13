@@ -1,0 +1,56 @@
+{
+  "data_asset_type": null,
+  "expectation_suite_name": "exp_suite",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": [
+          "TV",
+          "Radio",
+          "Newspaper",
+          "Sales"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "max_value": 99,
+        "min_value": 99
+      },
+      "meta": {}
+    }
+  ],
+  "ge_cloud_id": null,
+  "meta": {
+    "citations": [
+      {
+        "batch_request": {
+          "data_asset_name": "first_data.csv",
+          "data_connector_name": "default_inferred_data_connector_name",
+          "datasource_name": "my_pandas_datasource",
+          "limit": 1000
+        },
+        "citation_date": "2022-07-13T18:35:45.127312Z",
+        "comment": "Created suite added via CLI"
+      }
+    ],
+    "columns": {
+      "Newspaper": {
+        "description": ""
+      },
+      "Radio": {
+        "description": ""
+      },
+      "Sales": {
+        "description": ""
+      },
+      "TV": {
+        "description": ""
+      }
+    },
+    "great_expectations_version": "0.15.12"
+  }
+}
