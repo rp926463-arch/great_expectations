@@ -14,7 +14,7 @@ class CustomSparkDataset(SparkDFDataset):
     _data_asset_type = "CustomSparkDataset"
     
     @MetaSparkDFDataset.column_map_expectation
-    def expect_multi_column_sum_values_to_be_equal_to_other_old(self,
+    def expect_multi_column_sum_values_to_be_equal_to_other(self,
         column,
         column_list,
         column_name,
@@ -30,28 +30,13 @@ class CustomSparkDataset(SparkDFDataset):
             F.when(F.col("actual_total") <= F.col(column_name), F.lit(True)).otherwise(F.lit(False)),
         )
     
-    @MetaSparkDFDataset.multicolumn_map_expectation
-    def expect_multi_column_sum_values_to_be_equal_to_other(self,
-        column_list,
-        column_name,
-        mostly=None,
-        result_format=None,
-        include_config=True,
-        catch_exception=None,
-        meta=None,
-        ):
-        #self.spark_df.printSchema()
-        md_column_list=column_list.withColumn("actual_total", sum([F.col(x) for x in column_list.columns[:-1]]))
-        #print(self.spark_df[column_name])
-        cmp_df = self.spark_df.select(column_name)
-        #cmp_df.printSchema()
-        md_column_list = md_column_list.withColumn("test", cmp_df[column_name])
-        #md_column_list.printSchema()
-        return md_column_list.withColumn("__success",F.when(F.col("actual_total")==F.col("actual_total"), F.lit(True)).otherwise(F.lit(False)))
-    
 '''
 
 dbutils.fs.put("/test/project/GE_Plugins/expectations/ge_custom_multi_col_sum_4.py", code_text, True)
+
+# COMMAND ----------
+
+!pip install great_expectations
 
 # COMMAND ----------
 
@@ -135,6 +120,7 @@ class CustomeGEValidations:
                 {
                     "expectation_type": "expect_multi_column_sum_values_to_be_equal_to_other",
                     "kwargs": {
+                        "column": "Value",
                         "column_list": [
                             "Element Code",
                             "Item Code",
